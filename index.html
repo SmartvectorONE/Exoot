@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invasieve Exoten Herkenner</title>
+    <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -177,6 +178,18 @@
 
     <!-- JavaScript for app logic -->
     <script>
+        // Registreer de service worker
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+              .then((registration) => {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+              }, (err) => {
+                console.log('ServiceWorker registration failed: ', err);
+              });
+          });
+        }
+    
         // Get references to all necessary UI elements
         const imageInput = document.getElementById('image-input');
         const cameraButton = document.getElementById('camera-button');
