@@ -164,22 +164,8 @@
 
     <!-- JavaScript for app logic -->
     <script>
-        // Registreer de service worker als deze ondersteund wordt
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                try {
-                    navigator.serviceWorker.register('service-worker.js')
-                        .then(registration => {
-                            console.log('Service Worker geregistreerd met scope:', registration.scope);
-                        })
-                        .catch(error => {
-                            console.error('Service Worker registratie mislukt:', error);
-                        });
-                } catch (e) {
-                    console.error('Fout bij het registreren van de Service Worker:', e);
-                }
-            });
-        }
+        // De Service Worker-registratie is verwijderd om de ongebruikelijke URL-protocolfout te voorkomen.
+        
         // Get references to all necessary UI elements
         const imageInput = document.getElementById('image-input');
         const cameraButton = document.getElementById('camera-button');
@@ -202,16 +188,13 @@
 
         const geminiOverlay = document.getElementById('gemini-overlay');
         const geminiResultContainer = document.getElementById('gemini-result-container');
-        const geminiTitle = document.getElementById('gemini-title');
+        const geminiTitle = document = document.getElementById('gemini-title');
         const geminiContent = document.getElementById('gemini-content');
         const backButton = document.getElementById('back-button');
         const nvwaButton = document.getElementById('nvwa-button');
-
-        // BELANGRIJK: De geheime sleutel wordt niet direct in de code geplaatst.
-        // De waarde van WEBHOOK_SECRET wordt nu geacht te worden ingesteld door de hostingomgeving (Coolify).
-        // De waarde moet beschikbaar zijn als een globale variabele op het window-object.
-        // Zorg ervoor dat je deze variabele in Coolify instelt.
-        const WEBHOOK_SECRET = window.WEBHOOK_SECRET;
+        
+        // BELANGRIJK: De geheime sleutel wordt hier ingevuld tijdens het bouwproces.
+        const WEBHOOK_SECRET = '__WEBHOOK_SECRET__';
         
         const N8N_WEBHOOK_URL = 'https://n8n.smrt1.nl/webhook/a0fd40e1-ac57-44e1-8335-6e9d7a137482';
         
@@ -261,8 +244,8 @@
             const formData = new FormData();
             formData.append('file', file);
             
-            if (!WEBHOOK_SECRET) {
-                const errorMsg = 'De WEBHOOK_SECRET is niet ingesteld. Controleer de omgevingsvariabele in Coolify.';
+            if (WEBHOOK_SECRET === '__WEBHOOK_SECRET__' || !WEBHOOK_SECRET) {
+                const errorMsg = 'De WEBHOOK_SECRET is niet ingesteld. Configureer de omgevingsvariabele in Coolify en herbouw de applicatie.';
                 console.error(errorMsg);
                 loadingSpinner.classList.add('hidden');
                 errorStateContainer.classList.remove('hidden');
@@ -271,7 +254,7 @@
             }
 
             console.log('Gebruikt webhook URL:', N8N_WEBHOOK_URL);
-            console.log('Gebruikt WEBHOOK_SECRET:', WEBHOOK_SECRET ? '***** (ingesteld)' : 'Niet ingesteld!');
+            console.log('Gebruikt WEBHOOK_SECRET:', '***** (ingesteld)');
 
             try {
                 // Hier wordt de HTTP-aanvraag naar de n8n webhook gestuurd.
