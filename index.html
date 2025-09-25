@@ -20,9 +20,6 @@
             width: 100%;
             height: 100%;
             background-color: rgba(243, 244, 246, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             z-index: 50;
             opacity: 0;
             pointer-events: none;
@@ -38,7 +35,7 @@
             background-color: white;
             border-radius: 1.5rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            padding: 1.5rem; /* Adjusted for less whitespace */
+            padding: 1rem; /* Adjusted for less whitespace */
             max-width: 28rem;
             width: calc(100% - 2rem);
             margin: 1rem;
@@ -100,7 +97,7 @@
     </div>
 
     <!-- Result overlay section -->
-    <div id="results-overlay" class="overlay-container">
+    <div id="results-overlay" class="overlay-container flex items-center justify-center">
         <div id="results-container" class="content-card">
             <h2 class="text-xl font-semibold text-gray-800 mb-4">Herkenning Resultaat</h2>
             <div class="space-y-4 text-left">
@@ -131,7 +128,7 @@
     </div>
 
     <!-- Gemini result overlay section -->
-    <div id="gemini-overlay" class="overlay-container">
+    <div id="gemini-overlay" class="overlay-container flex items-start justify-center">
         <div id="gemini-result-container" class="content-card text-left">
             <h2 id="gemini-title" class="text-xl font-semibold text-gray-800 mb-4">Wat nu?</h2>
             <div id="gemini-content" class="text-gray-700 whitespace-pre-wrap space-y-2">
