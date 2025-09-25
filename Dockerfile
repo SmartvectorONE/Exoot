@@ -1,5 +1,5 @@
 # Gebruik de officiële Nginx-image als basis
-FROM ghcr.io/nginxinc/nginx-unprivileged:latest-alpine
+FROM ghcr.io/nginxinc/nginx-unprivileged:alpine3.21-perl
 
 # Verwijder de standaard Nginx HTML-bestanden
 RUN rm -rf /usr/share/nginx/html/*
