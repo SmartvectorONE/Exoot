@@ -256,6 +256,18 @@
 
             const formData = new FormData();
             formData.append('file', file);
+            
+            if (!WEBHOOK_SECRET) {
+                const errorMsg = 'De WEBHOOK_SECRET is niet ingesteld. Controleer de omgevingsvariabele in Coolify.';
+                console.error(errorMsg);
+                loadingSpinner.classList.add('hidden');
+                errorStateContainer.classList.remove('hidden');
+                errorMessage.textContent = errorMsg;
+                return;
+            }
+
+            console.log('Gebruikt webhook URL:', N8N_WEBHOOK_URL);
+            console.log('Gebruikt WEBHOOK_SECRET:', WEBHOOK_SECRET ? '***** (ingesteld)' : 'Niet ingesteld!');
 
             try {
                 // Hier wordt de HTTP-aanvraag naar de n8n webhook gestuurd.
