@@ -45,9 +45,6 @@
             text-align: center;
             transform: translateY(20px);
             transition: transform 0.5s ease-in-out;
-            /* Added to fix height on mobile */
-            max-height: 90vh; 
-            overflow-y: auto;
         }
 
         .overlay-container.show .content-card {
@@ -285,14 +282,9 @@
                 }
                 certaintyResult.textContent = `${certaintyValue}%`;
 
-                if (output.Soort === 'Plant is onbekend') {
-                     invasiveResult.textContent = 'Nee';
-                    invasiveResult.classList.remove('bg-red-500');
-                    invasiveResult.classList.add('bg-green-500');
-                    whatNowButton.classList.add('hidden');
-                } else if (output.Exoot === 'Ja' || output.Exoot === 'Betreft waarschijnlijk invasieve exoot' || output.Exoot === 'Waarschijnlijk') {
+                if (output.Exoot === 'Ja' || output.Exoot === 'Betreft waarschijnlijk invasieve exoot' || output.Exoot === 'Waarschijnlijk') {
                     invasiveResult.textContent = 'Ja';
-                    invasiveResult.classList.remove('bg-gray-500');
+                    invasiveResult.classList.remove('bg-green-500');
                     invasiveResult.classList.add('bg-red-500');
                     whatNowButton.classList.remove('hidden');
                     whatNowButton.classList.remove('bg-blue-500');
