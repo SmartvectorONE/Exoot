@@ -1,5 +1,5 @@
 # Gebruik de officiële Nginx-image als basis
-FROM nginx:alpine
+FROM nginx:1.27.0-alpine
 
 # Verwijder de standaard Nginx HTML-bestanden
 RUN rm -rf /usr/share/nginx/html/*
