@@ -45,6 +45,9 @@
             text-align: center;
             transform: translateY(20px);
             transition: transform 0.5s ease-in-out;
+            /* Added to fix height on mobile */
+            max-height: 90vh; 
+            overflow-y: auto;
         }
 
         .overlay-container.show .content-card {
