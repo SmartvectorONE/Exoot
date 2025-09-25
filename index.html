@@ -53,7 +53,7 @@
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
-    <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+    <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full max-h-screen overflow-y-auto text-center">
         <!-- Logo and title -->
         <div class="flex items-center justify-center space-x-2 mb-4">
             <!-- Nieuw blad logo gebaseerd op de geüploade afbeelding -->
@@ -164,8 +164,6 @@
 
     <!-- JavaScript for app logic -->
     <script>
-        // De Service Worker-registratie is verwijderd om de ongebruikelijke URL-protocolfout te voorkomen.
-        
         // Get references to all necessary UI elements
         const imageInput = document.getElementById('image-input');
         const cameraButton = document.getElementById('camera-button');
