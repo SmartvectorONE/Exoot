@@ -128,31 +128,29 @@
     </div>
 
     <!-- Gemini result overlay section -->
-    <div id="gemini-overlay" class="overlay-container flex items-start justify-center">
+    <div id="gemini-overlay" class="overlay-container flex items-center justify-center">
         <div id="gemini-result-container" class="content-card text-left">
-            <h2 id="gemini-title" class="text-xl font-semibold text-gray-800 mb-4">Wat nu?</h2>
-            <div id="gemini-content" class="text-gray-700 whitespace-pre-wrap space-y-2">
-                <p class="font-semibold text-gray-800">Hier zijn de volgende stappen bij de vondst van een invasieve exoot:</p>
-                <div class="space-y-1">
-                    <div class="flex items-start space-x-2">
-                        <span class="text-green-600 font-bold text-lg">1.</span>
-                        <p class="text-gray-700">Controleer je vondst. Neem eventueel een tweede foto ter controle.</p>
-                    </div>
-                    <div class="flex items-start space-x-2">
-                        <span class="text-green-600 font-bold text-lg">2.</span>
-                        <p class="text-gray-700">Als je zeker bent van de vondst, is het belangrijk om deze te melden bij een officiële instantie.</p>
-                    </div>
-                    <div class="flex items-start space-x-2">
-                        <span class="text-green-600 font-bold text-lg">3.</span>
-                        <p class="text-gray-700">Ga naar de NVWA-website voor meer informatie over het melden en bestrijden van invasieve exoten.</p>
-                    </div>
+            <h2 id="gemini-title" class="text-2xl font-semibold text-gray-800 mb-6 text-center">Wat nu?</h2>
+            <p class="font-semibold text-gray-800 text-center mb-4">Hier zijn de vervolgstappen bij de vondst van een invasieve exoot:</p>
+            <div class="space-y-6">
+                <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-2 sm:space-y-0 sm:space-x-4">
+                    <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-lg font-bold rounded-full bg-green-600 text-white">1</span>
+                    <p class="text-gray-700 text-center sm:text-left">Controleer je vondst. Neem eventueel enkele extra foto's ter controle.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-2 sm:space-y-0 sm:space-x-4">
+                    <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-lg font-bold rounded-full bg-green-600 text-white">2</span>
+                    <p class="text-gray-700 text-center sm:text-left">Als je zeker bent van de vondst, is het belangrijk om deze te melden bij een officiële instantie.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-2 sm:space-y-0 sm:space-x-4">
+                    <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-lg font-bold rounded-full bg-green-600 text-white">3</span>
+                    <p class="text-gray-700 text-center sm:text-left">Ga naar de NVWA-website voor meer informatie over het melden en bestrijden van invasieve exoten.</p>
                 </div>
             </div>
-            <div class="mt-4 text-center space-y-4">
-                <button id="nvwa-button" class="inline-block bg-blue-500 text-white font-medium py-2 px-4 rounded-full hover:bg-blue-600 transition duration-300">
+            <div class="mt-8 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button id="nvwa-button" class="w-full sm:w-auto bg-blue-500 text-white font-medium py-2 px-4 rounded-full hover:bg-blue-600 transition duration-300">
                     NVWA-website
                 </button>
-                <button id="back-button" class="inline-block bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-full hover:bg-gray-300 transition duration-300">
+                <button id="back-button" class="w-full sm:w-auto bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-full hover:bg-gray-300 transition duration-300">
                     Terug
                 </button>
             </div>
