@@ -99,6 +99,15 @@
     <!-- Result overlay section -->
     <div id="results-overlay" class="overlay-container flex items-center justify-center">
         <div id="results-container" class="content-card">
+            <!-- Logo and title for results view -->
+            <div class="flex items-center justify-center space-x-2 mb-4">
+                <svg class="w-8 h-8 text-green-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.981 2.227c-.413-.239-.933-.239-1.346 0L5.342 6.551C4.929 6.79 4.671 7.228 4.671 7.7V17c0 .472.258.91.671 1.149l6.293 3.636c.413.239.933.239 1.346 0l6.293-3.636c.413-.239.671-.677.671-1.149V7.7c0-.472-.258-.91-.671-.149L12.981 2.227z" stroke="#16a34a" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M12 7.5L12 17M12 10L16.293 12.441M12 10L7.707 12.441" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h1 class="text-3xl font-bold text-green-600">Exota</h1>
+            </div>
+            
             <h2 class="text-xl font-semibold text-gray-800 mb-4">Herkenning Resultaat</h2>
             <div class="space-y-4 text-left">
                 <div>
@@ -130,6 +139,15 @@
     <!-- Gemini result overlay section -->
     <div id="gemini-overlay" class="overlay-container flex items-center justify-center">
         <div id="gemini-result-container" class="content-card text-left">
+            <!-- Logo and title for 'What Now' view -->
+            <div class="flex items-center justify-center space-x-2 mb-4">
+                <svg class="w-8 h-8 text-green-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.981 2.227c-.413-.239-.933-.239-1.346 0L5.342 6.551C4.929 6.79 4.671 7.228 4.671 7.7V17c0 .472.258.91.671 1.149l6.293 3.636c.413.239.933.239 1.346 0l6.293-3.636c.413-.239.671-.677.671-1.149V7.7c0-.472-.258-.91-.671-.149L12.981 2.227z" stroke="#16a34a" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M12 7.5L12 17M12 10L16.293 12.441M12 10L7.707 12.441" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h1 class="text-3xl font-bold text-green-600">Exota</h1>
+            </div>
+
             <h2 id="gemini-title" class="text-2xl font-semibold text-gray-800 mb-6 text-center">Wat nu?</h2>
             <p class="font-semibold text-gray-800 text-center mb-4">Hier zijn de vervolgstappen bij de vondst van een invasieve exoot:</p>
             <div class="space-y-6">
@@ -181,7 +199,7 @@
 
         const geminiOverlay = document.getElementById('gemini-overlay');
         const geminiResultContainer = document.getElementById('gemini-result-container');
-        const geminiTitle = document = document.getElementById('gemini-title');
+        const geminiTitle = document.getElementById('gemini-title');
         const geminiContent = document.getElementById('gemini-content');
         const backButton = document.getElementById('back-button');
         const nvwaButton = document.getElementById('nvwa-button');
@@ -278,18 +296,16 @@
                 certaintyResult.textContent = `${certaintyValue}%`;
 
                 // Reset de badge kleuren om conflicten te voorkomen
-                invasiveResult.classList.remove('bg-red-500', 'bg-green-500');
+                invasiveResult.classList.remove('bg-red-500', 'bg-green-500', 'bg-gray-500');
 
                 if (output.Soort === 'Plant is onbekend') {
-                     invasiveResult.textContent = 'Nee';
+                     invasiveResult.textContent = 'Onbekend';
                      invasiveResult.classList.add('bg-gray-500');
                      whatNowButton.classList.add('hidden');
                 } else if (output.Exoot === 'Ja' || output.Exoot === 'Betreft waarschijnlijk invasieve exoot' || output.Exoot === 'Waarschijnlijk') {
                     invasiveResult.textContent = 'Ja';
                     invasiveResult.classList.add('bg-red-500');
                     whatNowButton.classList.remove('hidden');
-                    whatNowButton.classList.add('bg-red-500'); // Ensure 'Wat nu' button is red
-                    whatNowButton.classList.remove('bg-blue-500');
                 } else {
                     invasiveResult.textContent = 'Nee';
                     invasiveResult.classList.add('bg-green-500');
