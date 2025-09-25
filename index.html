@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exota</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-green': '#10B981',
+                        'light-green': '#A7F3D0',
+                        'primary-blue': '#3B82F6',
+                        'text-dark': '#1F2937',
+                        'text-light': '#F9FAFB',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F4F6;
+        }
+        .file-upload-container {
+            border: 2px dashed #D1D5DB;
+            background-color: #F9FAFB;
+            transition: all 0.3s ease;
+        }
+        .file-upload-container:hover {
+            border-color: #9CA3AF;
+        }
+        .btn {
+            @apply px-6 py-3 rounded-lg font-bold text-white transition-all duration-300 transform hover:scale-105 shadow-lg;
+        }
+        .btn-green {
+            @apply bg-primary-green hover:bg-emerald-600;
+        }
+        .btn-blue {
+            @apply bg-primary-blue hover:bg-blue-600;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .overlay-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(243, 244, 246, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        .result-content {
+            background-color: #fff;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 450px;
+            text-align: center;
+        }
+        .slide-up-enter-active, .slide-up-leave-active {
+            transition: all 0.5s ease;
+        }
+        .slide-up-enter, .slide-up-leave-to {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div id="app" class="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full transition-all duration-500 transform scale-100">
+        <h1 class="text-3xl font-bold text-center text-text-dark mb-6">Exota</h1>
+
+        <!-- Standaard weergave: Upload foto -->
+        <div id="upload-section" class="flex flex-col items-center text-center transition-opacity duration-500">
+            <div class="file-upload-container w-full p-8 rounded-xl cursor-pointer">
+                <input type="file" id="file-input" class="hidden" accept="image/*" capture="environment">
+                <div class="flex flex-col items-center justify-center h-full">
+                    <span class="text-5xl mb-4 text-gray-400">📷</span>
+                    <p class="text-gray-600 font-semibold">Selecteer of maak een foto</p>
+                    <p class="text-sm text-gray-400 mt-1">PNG, JPG, HEIC</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weergave na upload/laden -->
+        <div id="loading-section" class="hidden flex flex-col items-center justify-center text-center py-8">
+            <div class="spinner mb-4"></div>
+            <p class="text-gray-600 font-semibold">Foto wordt geüpload...</p>
+        </div>
+
+        <div id="error-section" class="hidden flex flex-col items-center justify-center text-center py-8">
+            <p class="text-red-500 font-semibold mb-4">Er is een netwerkfout opgetreden.</p>
+            <button id="retry-button" class="btn btn-green mt-4">Opnieuw</button>
+        </div>
+    </div>
+
+    <!-- Overlay voor resultaten -->
+    <div id="result-overlay" class="overlay-container hidden">
+        <div class="result-content flex flex-col items-center">
+            <img id="uploaded-image" class="w-full h-auto rounded-xl shadow-md object-cover mb-6">
+            <div class="w-full">
+                <div id="recognition-results" class="space-y-4 text-left w-full">
+                    <div>
+                        <p class="text-sm font-semibold text-gray-500">Soort:</p>
+                        <p id="species-name" class="text-lg text-text-dark font-semibold">Onbekend</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-500">Zekerheid:</p>
+                        <p id="certainty-value" class="text-lg text-text-dark font-semibold">0%</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-500">Invasieve Exoot:</p>
+                        <p id="invasive-status" class="text-lg font-semibold" style="color: #9CA3AF;">Nee</p>
+                    </div>
+                </div>
+                <div id="action-buttons" class="mt-8 flex justify-center gap-4">
+                    <button id="what-now-btn" class="hidden btn text-text-dark" style="background-color: #EF4444;">Wat nu?</button>
+                    <button id="retry-btn-result" class="btn btn-green">Opnieuw</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay voor 'Wat nu?' -->
+    <div id="what-now-overlay" class="overlay-container hidden">
+        <div class="result-content flex flex-col items-center text-left">
+            <h2 class="text-2xl font-bold text-text-dark mb-4 text-center">Wat nu?</h2>
+            <div class="text-gray-700 space-y-4 text-sm leading-relaxed">
+                <p>U heeft een mogelijke invasieve exoot herkend. We raden u aan om de volgende stappen te nemen:</p>
+                <div class="space-y-3">
+                    <p class="font-semibold">Stap 1: Controleer de vondst</p>
+                    <p>Maak indien mogelijk een foto van de plant vanuit een andere hoek of met een andere belichting en voer de herkenning opnieuw uit.</p>
+                    <p class="font-semibold">Stap 2: Bevestig het resultaat</p>
+                    <p>Controleer het resultaat handmatig aan de hand van betrouwbare bronnen.</p>
+                    <p class="font-semibold">Stap 3: Meld de vondst</p>
+                    <p>Als het resultaat een invasieve exoot is, is het belangrijk om dit te melden bij de juiste instanties. De NVWA heeft richtlijnen voor het omgaan met deze planten.</p>
+                </div>
+            </div>
+            <div class="mt-6 flex flex-col items-center gap-4 w-full">
+                <a href="https://www.nvwa.nl/onderwerpen/invasieve-exoten/invasieve-planten/invasieve-landplanten/melden-en-bestrijden-invasieve-landplanten" target="_blank" class="w-full">
+                    <button class="btn btn-green w-full">NVWA-website</button>
+                </a>
+                <button id="back-to-home-btn" class="w-full text-center px-6 py-3 rounded-lg font-bold text-text-dark transition-all duration-300 transform hover:scale-105">Terug</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileInput = document.getElementById('file-input');
+            const uploadSection = document.getElementById('upload-section');
+            const loadingSection = document.getElementById('loading-section');
+            const errorSection = document.getElementById('error-section');
+            const resultOverlay = document.getElementById('result-overlay');
+            const whatNowOverlay = document.getElementById('what-now-overlay');
+            const uploadedImage = document.getElementById('uploaded-image');
+            const speciesName = document.getElementById('species-name');
+            const certaintyValue = document.getElementById('certainty-value');
+            const invasiveStatus = document.getElementById('invasive-status');
+            const whatNowBtn = document.getElementById('what-now-btn');
+            const retryBtnResult = document.getElementById('retry-btn-result');
+            const retryBtnError = document.getElementById('retry-button');
+            const backToHomeBtn = document.getElementById('back-to-home-btn');
+
+            const API_ENDPOINT = 'https://n8n.smrt1.nl/webhook/a0fd40e1-ac57-44e1-8335-6e9d7a137482';
+
+            const showSection = (section) => {
+                uploadSection.classList.add('hidden');
+                loadingSection.classList.add('hidden');
+                errorSection.classList.add('hidden');
+                resultOverlay.classList.add('hidden');
+                whatNowOverlay.classList.add('hidden');
+                
+                section.classList.remove('hidden');
+            };
+
+            const resetApp = () => {
+                showSection(uploadSection);
+                whatNowBtn.classList.add('hidden');
+            };
+
+            fileInput.addEventListener('change', async (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+            
+                // Weergeef direct de geüploade foto.
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    uploadedImage.src = reader.result;
+                };
+                reader.readAsDataURL(file);
+
+                showSection(loadingSection);
+                
+                try {
+                    // Maak een FormData-object om het bestand binair te versturen.
+                    const formData = new FormData();
+                    formData.append('file', file);
+
+                    const response = await fetch(API_ENDPOINT, {
+                        method: 'POST',
+                        body: formData,
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const data = await response.json();
+                    const output = data.output || {};
+
+                    const species = output.Soort || 'Onbekend';
+                    const certainty = output.Betrouwbaarheid || '0%';
+                    const exoot = output.Exoot || 'Nee';
+
+                    speciesName.textContent = species;
+                    certaintyValue.textContent = certainty;
+                    
+                    const isExoot = (exoot === 'Ja' || exoot === 'Betreft waarschijnlijk invasieve exoot' || exoot === 'Waarschijnlijk') && species !== "Plant is onbekend";
+
+                    if (isExoot) {
+                        invasiveStatus.textContent = 'Ja';
+                        invasiveStatus.style.color = '#EF4444';
+                        whatNowBtn.classList.remove('hidden');
+                    } else {
+                        invasiveStatus.textContent = 'Nee';
+                        invasiveStatus.style.color = '#9CA3AF';
+                        whatNowBtn.classList.add('hidden');
+                    }
+
+                    showSection(resultOverlay);
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    showSection(errorSection);
+                }
+            });
+
+            uploadSection.addEventListener('click', () => fileInput.click());
+            retryBtnResult.addEventListener('click', resetApp);
+            retryBtnError.addEventListener('click', resetApp);
+            backToHomeBtn.addEventListener('click', resetApp);
+            
+            whatNowBtn.addEventListener('click', () => {
+                showSection(whatNowOverlay);
+            });
+        });
+    </script>
+</body>
+</html>
