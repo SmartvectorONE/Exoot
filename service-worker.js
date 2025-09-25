@@ -1,18 +1,17 @@
-// Service Worker for the Exota App
-// This file can be used to add offline functionality and caching.
-
 const CACHE_NAME = 'exota-cache-v1';
 const urlsToCache = [
-  './',
-  './index.html',
-  'https://cdn.tailwindcss.com',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap'
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/styles.css',
+  '/scripts.js'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
+        console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
   );
