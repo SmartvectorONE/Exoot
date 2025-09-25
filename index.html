@@ -54,7 +54,16 @@
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
     <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">Exota</h1>
+        <!-- Logo and title -->
+        <div class="flex items-center justify-center space-x-2 mb-4">
+            <!-- Nieuw blad logo gebaseerd op de geüploade afbeelding -->
+            <svg class="w-8 h-8 text-green-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.981 2.227c-.413-.239-.933-.239-1.346 0L5.342 6.551C4.929 6.79 4.671 7.228 4.671 7.7V17c0 .472.258.91.671 1.149l6.293 3.636c.413.239.933.239 1.346 0l6.293-3.636c.413-.239.671-.677.671-1.149V7.7c0-.472-.258-.91-.671-1.149L12.981 2.227z" stroke="#16a34a" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M12 7.5L12 17M12 10L16.293 12.441M12 10L7.707 12.441" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h1 class="text-3xl font-bold text-green-600">Exota</h1>
+        </div>
+        
         <p class="text-lg text-gray-600 mb-4">Invasieve exoten herkenner</p>
         <p class="text-gray-500 mb-6">Neem een foto of selecteer een afbeelding om een plant te herkennen.</p>
 
@@ -241,7 +250,6 @@
             reader.readAsDataURL(file);
 
             const formData = new FormData();
-            // Aangepaste code: verander 'image' naar 'file'
             formData.append('file', file);
 
             try {
