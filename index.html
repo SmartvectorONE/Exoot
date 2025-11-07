@@ -48,9 +48,20 @@
         .overlay-container.show .content-card {
             transform: translateY(0);
         }
+
+        .version-label {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            color: #9ca3af;
+            font-size: 0.75rem;
+            font-weight: 400;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
+    <div class="version-label">version 0.5</div>
     <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full max-h-screen overflow-y-auto text-center">
         <!-- Logo and title -->
         <div class="flex items-center justify-center space-x-2 mb-4">
